@@ -165,6 +165,7 @@ async function fetchSearchWeatherInfo(city) {
         renderWeatherInfo(data);
     }
     catch(err) {
+        userInfoContainer.classList.remove("active");
         console.log("error",err)
     }
 }
