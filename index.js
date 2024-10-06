@@ -31,7 +31,7 @@ function switchTab(newTab) {
             searchForm.classList.remove("active");
             userInfoContainer.classList.remove("active");
             //ab main your weather tab me aagya hu, toh weather bhi display karna poadega, so let's check local storage first
-            //for coordinates, if we haved saved them there.
+            //for coordinates, if we have saved them there.
             getfromSessionStorage();
         }
     }
@@ -119,7 +119,7 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(showPosition);
     }
     else {
-        //HW - show an alert for no gelolocation support available
+        alert("No gelolocation support available");
     }
 }
 
@@ -165,7 +165,6 @@ async function fetchSearchWeatherInfo(city) {
         renderWeatherInfo(data);
     }
     catch(err) {
-        //hW
         console.log("error",err)
     }
 }
