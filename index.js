@@ -115,25 +115,46 @@ function renderWeatherInfo(weatherInfo) {
 }
 
 function getLocation() {
-    if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    }
-    else {
-        alert("No gelolocation support available");
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, handleError, {
+            enableHighAccuracy: true, // Request high accuracy
+            timeout: 10000,           // Set a timeout for getting the position
+            maximumAge: 0             // Prevent caching of the position
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
     }
 }
 
+// Function to handle successful retrieval of position
 function showPosition(position) {
-
     const userCoordinates = {
         lat: position.coords.latitude,
         lon: position.coords.longitude,
-    }
+    };
 
     sessionStorage.setItem("user-coordinates", JSON.stringify(userCoordinates));
     fetchUserWeatherInfo(userCoordinates);
-
 }
+
+// Function to handle errors during geolocation
+function handleError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+    }
+}
+
 
 const grantAccessButton = document.querySelector("[data-grantAccess]");
 grantAccessButton.addEventListener("click", getLocation);
