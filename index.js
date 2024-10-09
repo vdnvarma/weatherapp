@@ -10,7 +10,6 @@ const userInfoContainer = document.querySelector(".user-info-container");
 let oldTab = userTab;
 const API_KEY = "d1845658f92b31c64bd94f06f7188c9c";
 oldTab.classList.add("current-tab");
-getfromSessionStorage();
 
 function switchTab(newTab) {
     if(newTab != oldTab) {
@@ -26,7 +25,6 @@ function switchTab(newTab) {
         else {
             searchForm.classList.remove("active");
             userInfoContainer.classList.remove("active");
-            getfromSessionStorage();
         }
     }
 }
@@ -40,16 +38,16 @@ searchTab.addEventListener("click", () => {
 });
 
 // Check if coordinates are already present in session storage
-function getfromSessionStorage() {
-    const localCoordinates = sessionStorage.getItem("user-coordinates");
-    if(!localCoordinates) {
-        grantAccessContainer.classList.add("active");
-    } else {
-        const coordinates = JSON.parse(localCoordinates);
-        console.log("Fetched coordinates from session storage:", coordinates);
-        fetchUserWeatherInfo(coordinates);
-    }
-}
+// function getfromSessionStorage() {
+//     const localCoordinates = sessionStorage.getItem("user-coordinates");
+//     if(!localCoordinates) {
+//         grantAccessContainer.classList.add("active");
+//     } else {
+//         const coordinates = JSON.parse(localCoordinates);
+//         console.log("Fetched coordinates from session storage:", coordinates);
+//         fetchUserWeatherInfo(coordinates);
+//     }
+// }
 
 async function fetchUserWeatherInfo(coordinates) {
     const {lat, lon} = coordinates;
@@ -108,7 +106,7 @@ function showPosition(position) {
         lon: position.coords.longitude,
     };
     console.log("Fetched current position:", userCoordinates);
-    sessionStorage.setItem("user-coordinates", JSON.stringify(userCoordinates));
+    // sessionStorage.setItem("user-coordinates", JSON.stringify(userCoordinates));
     fetchUserWeatherInfo(userCoordinates);
 }
 
